@@ -15,7 +15,7 @@ steps:
     containerRegistry: 'az-dockerhub-connection'  # Replace with your Docker registry connection.
     repository: 'hibaallah2024/docker-image'
     command: 'buildAndPush'
-    Dockerfile: '/Dockerfile'
+    Dockerfile: 'Dockerfile'
     tags: 'latest'
 
 - powershell: |
