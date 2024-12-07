@@ -22,5 +22,5 @@ steps:
     curl.exe -X POST -H "Authorization: Bearer $env:RENDER_API_KEY" `
     -H "Content-Type: application/json" `
     -d '{\"serviceId\":\"azure-project\",\"clearCache\":true}' `
-    "https://api.render.com/v1/services/docker-image/deploy"
+    "https://api.render.com/v1/services/azure-project/deploy"
   displayName: 'Trigger Deploy on Render'
