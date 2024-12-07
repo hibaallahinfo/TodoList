@@ -13,7 +13,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'az-dockerhub-connection'  # Replace with your Docker registry connection.
-    repository: 'kawtark413/az-cicd'
+    repository: 'hibaallah2024/docker-image'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
@@ -21,8 +21,8 @@ steps:
 - powershell: |
     curl.exe -X POST -H "Authorization: Bearer $env:RENDER_API_KEY" `
     -H "Content-Type: application/json" `
-    -d '{\"serviceId\":\"az-cicd\",\"clearCache\":true}' `
-    "https://api.render.com/v1/services/az-cicd/deploy"
+    -d '{\"serviceId\":\"docker-image\",\"clearCache\":true}' `
+    "https://api.render.com/v1/services/docker-image/deploy"
   displayName: 'Trigger Deploy on Render'
 
 
