@@ -1,28 +1,35 @@
 trigger:
   branches:
     include:
-      - main
+      - main  # Le pipeline sera déclenché automatiquement lors de la mise à jour de la branche 'main'
 
 pool:
-  name: Default  # Replace with your self-hosted agent pool name if needed.
+  vmImage: 'ubuntu-latest'  # Utilisation d'un agent Microsoft-hosted pour exécuter le pipeline
 
 steps:
+# Étape 1 : Cloner le dépôt
 - checkout: self
-  fetchDepth: 1
+  fetchDepth: 1  # Cloner uniquement les commits récents pour accélérer le processus
 
+# Étape 2 : Construire l'image Docker et la pousser vers Docker Hub
 - task: Docker@2
   inputs:
-    containerRegistry: 'az-dockerhub-connection'  # Replace with your Docker registry connection.
-    repository: 'hibaallah2024/docker-image'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    containerRegistry: 'az-dockerhub-connection'  # Nom de la connexion Docker Hub configurée dans Azure DevOps
+    repository: 'hibaallah2024/docker-image'  # Nom du dépôt Docker Hub où l'image sera poussée
+    command: 'buildAndPush'  # Commande pour construire et pousser l'image
+    Dockerfile: '**/Dockerfile'  # Emplacement du Dockerfile
+    tags: 'latest'  # Tag de l'image Docker
 
+# Étape 3 : Vérification de l'image Docker sur Docker Hub
+- script: |
+    echo "Vérification de l'image Docker..."
+    docker pull hibaallah2024/docker-image:latest  # Assurez-vous que l'image la plus récente est bien téléchargée
+    docker inspect --format='{{index .RepoDigests 0}}' hibaallah2024/docker-image:latest  # Vérifier le digest de l'image
+  #displayName: 'Vérifier l\'image Docker sur Docker Hub'
+
+# Étape 4 : Déclencher le déploiement sur Render via le Deploy Hook
 - powershell: |
-    curl.exe -X POST -H "Authorization: Bearer $env:RENDER_API_KEY" `
-    -H "Content-Type: application/json" `
-    -d '{\"serviceId\":\"docker-image\",\"clearCache\":true}' `
-    "https://api.render.com/v1/services/docker-image/deploy"
-  displayName: 'Trigger Deploy on Render'
-
+    Invoke-RestMethod -Uri "https://api.render.com/deploy/srv-cta7th1u0jms73etm610?key=1T3RDrYS6co" `
+        -Method Post
+  displayName: 'Déclencher le déploiement sur Render via Deploy Hook'
 
