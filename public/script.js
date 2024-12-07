@@ -8,17 +8,22 @@ document.getElementById('add-task').addEventListener('click', function() {
     }
 
     const taskItem = document.createElement('li');
+    taskItem.classList.add('task-item');
+
     const taskText = document.createElement('span');
     taskText.textContent = taskInput.value;
-    taskItem.appendChild(taskText);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('delete-btn');
+
     deleteButton.addEventListener('click', function() {
         taskList.removeChild(taskItem);
     });
-    taskItem.appendChild(deleteButton);
 
+    taskItem.appendChild(taskText);
+    taskItem.appendChild(deleteButton);
     taskList.appendChild(taskItem);
+
     taskInput.value = '';
 });
