@@ -7,9 +7,9 @@ pool:
   name: Default  # Utilisation d'un agent Microsoft-hosted pour exécuter le pipeline
 
 steps:
-# Étape 1 : Cloner le dépôt
 - checkout: self
-  fetchDepth: 1  # Cloner uniquement les commits récents pour accélérer le processus
+  fetchDepth: 1
+ # Cloner uniquement les commits récents pour accélérer le processus
 
 # Étape 2 : Construire l'image Docker et la pousser vers Docker Hub
 - task: Docker@2
