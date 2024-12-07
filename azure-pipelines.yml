@@ -8,7 +8,7 @@ pool:
 
 variables:
   # Variable secrète pour le Deploy Hook URL (assurez-vous de l'ajouter dans Azure DevOps comme variable secrète).
-  RENDER_DEPLOY_HOOK_URL: $(RENDER_DEPLOY_HOOK_URL)
+  RENDER_DEPLOY_HOOK_URL: 'https://api.render.com/deploy/srv-cta7th1u0jms73etm610?key=1T3RDrYS6co'
 
 steps:
 # Étape 1 : Récupérer le code source
