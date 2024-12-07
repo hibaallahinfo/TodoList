@@ -5,7 +5,6 @@ const path = require('path');
 const server = http.createServer((req, res) => {
     let filePath = './public' + (req.url === '/' ? '/index.html' : req.url);
     let contentType = 'text/html';
-
     const extname = path.extname(filePath);
     switch (extname) {
         case '.js':
