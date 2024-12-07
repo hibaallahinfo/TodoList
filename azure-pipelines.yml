@@ -1,14 +1,14 @@
 trigger:
   branches:
     include:
-      - main  # Le pipeline se déclenche automatiquement sur chaque push vers la branche "main".
+      - main  # Déclencher le pipeline automatiquement sur chaque push vers la branche "main".
 
 pool:
   name: Default  # Remplacez par le nom de votre pool si vous utilisez un agent auto-hébergé.
 
 variables:
-  # Variable secrète pour le Deploy Hook URL (assurez-vous de l'ajouter dans Azure DevOps comme variable secrète).
-  RENDER_DEPLOY_HOOK_URL: 'https://api.render.com/deploy/srv-cta7th1u0jms73etm610?key=1T3RDrYS6co'
+  # Déclarez votre Deploy Hook comme variable (ou utilisez la bibliothèque de variables secrètes).
+  RENDER_DEPLOY_HOOK_URL: 'https://api.render.com/deploy/srv-cta7th1u0jms73etm610?key=your-render-key'
 
 steps:
 # Étape 1 : Récupérer le code source
@@ -18,16 +18,19 @@ steps:
 # Étape 2 : Construire et pousser l'image Docker vers Docker Hub
 - task: Docker@2
   inputs:
-    containerRegistry: 'az-dockerhub-connection'  # Nom de votre connexion Docker Hub dans Azure DevOps.
-    repository: 'hibaallah2024/docker-image'      # Chemin vers votre dépôt Docker Hub (ex: <utilisateur>/<nom-depot>).
+    containerRegistry: 'az-dockerhub-connection'  # Connexion Docker Hub configurée dans Azure DevOps.
+    repository: 'hibaallah2024/docker-image'      # Répertoire de l'image Docker (<utilisateur>/<nom-repo>).
     command: 'buildAndPush'                       # Construire et pousser l'image Docker.
     Dockerfile: 'Dockerfile'                      # Chemin relatif vers le Dockerfile.
-    tags: 'latest'                                # Tag à utiliser pour l'image (ex: "latest").
+    tags: 'latest'                                # Utiliser le tag "latest" pour l'image.
 
-# Étape 3 : Déclencher le déploiement sur Render via le Deploy Hook
+# Étape 3 : Déclencher le déploiement Render via un Deploy Hook
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
-      curl -X POST "$(RENDER_DEPLOY_HOOK_URL)"
+      # Utilisation de Invoke-RestMethod pour appeler le Deploy Hook de Render
+      Invoke-RestMethod -Uri "$env:RENDER_DEPLOY_HOOK_URL" -Method Post
+  env:
+    RENDER_DEPLOY_HOOK_URL: $(RENDER_DEPLOY_HOOK_URL)  # Injecter l'URL du Deploy Hook dans l'environnement.
   displayName: 'Trigger Deploy via Render Hook'
