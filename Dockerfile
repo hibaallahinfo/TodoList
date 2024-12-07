@@ -21,3 +21,4 @@ EXPOSE 3000
 
 # Define the default command to run the application
 CMD ["npm", "start"]
+
