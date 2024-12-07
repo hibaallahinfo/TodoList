@@ -4,7 +4,7 @@ trigger:
       - main  # Le pipeline sera déclenché automatiquement lors de la mise à jour de la branche 'main'
 
 pool:
-  vmImage: 'ubuntu-latest'  # Utilisation d'un agent Microsoft-hosted pour exécuter le pipeline
+  name: Default  # Utilisation d'un agent Microsoft-hosted pour exécuter le pipeline
 
 steps:
 # Étape 1 : Cloner le dépôt
