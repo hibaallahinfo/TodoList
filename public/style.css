@@ -6,12 +6,18 @@
     --accent-color: #3182ce;
     --accent-hover: #2c5282;
     --border-color: #e2e8f0;
+    --completed-color: #a0aec0;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -60,6 +66,7 @@ h1 {
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    width: 100%; /* Ensure full width */
 }
 
 #new-task:focus {
@@ -76,6 +83,7 @@ h1 {
     cursor: pointer;
     font-weight: 600;
     transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 #add-task:hover {
@@ -86,6 +94,8 @@ h1 {
     list-style: none;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%;
 }
 
 .task-item {
@@ -98,36 +108,49 @@ h1 {
     margin-bottom: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease;
+    width: 100%; /* Ensure full width */
 }
 
 .task-item:hover {
     transform: translateX(5px);
 }
 
+.task-item.completed span {
+    text-decoration: line-through;
+    color: var(--completed-color);
+}
+
 .task-item span {
     flex-grow: 1;
-    margin-right: 15px;
+    margin: 0 15px;
     color: var(--text-secondary);
+    word-wrap: break-word; /* Ensure long text doesn't cause scrolling */
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.task-checkbox {
+    margin-right: 10px;
 }
 
 .delete-btn {
-    background-color: #e53e3e;
-    color: white;
+    background: none;
     border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
+    color: #e53e3e;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: color 0.3s ease;
+    font-size: 18px;
 }
 
 .delete-btn:hover {
-    background-color: #c53030;
+    color: #c53030;
 }
 
 @media (max-width: 600px) {
     .container {
         width: 95%;
         padding: 20px;
+        margin: 0 10px; /* Add small margin to prevent any potential overflow */
     }
 
     .task-input-container {
