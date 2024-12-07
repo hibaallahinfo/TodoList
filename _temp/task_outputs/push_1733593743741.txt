@@ -1,0 +1,25 @@
+The push refers to repository [docker.io/hibaallah2024/docker-image]
+742d4b291593: Preparing
+275983350221: Preparing
+9cf151f629cb: Preparing
+7bc54fa942ab: Preparing
+4e2d1e0c79c6: Preparing
+365ccd918307: Preparing
+1bba629c69e9: Preparing
+139c1270acf1: Preparing
+4693057ce236: Preparing
+365ccd918307: Waiting
+1bba629c69e9: Waiting
+139c1270acf1: Waiting
+4693057ce236: Waiting
+7bc54fa942ab: Layer already exists
+4e2d1e0c79c6: Layer already exists
+9cf151f629cb: Layer already exists
+365ccd918307: Layer already exists
+1bba629c69e9: Layer already exists
+742d4b291593: Pushed
+139c1270acf1: Layer already exists
+4693057ce236: Layer already exists
+275983350221: Pushed
+latest: digest: sha256:dcba32a5c4f7288783eda7f838ecd1eba93f26efba271693461ae411f97fa690 size: 2197
+
